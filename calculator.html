@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=San+Francisco:wght@400;600&display=swap');
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f5;
+            margin: 0;
+            font-family: 'San Francisco', sans-serif;
+        }
+
+        .calculator {
+            width: 320px;
+            background: #333;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .display {
+            background: #000;
+            color: #fff;
+            font-size: 2em;
+            padding: 20px;
+            text-align: right;
+            border-radius: 20px 20px 0 0;
+            font-family: 'San Francisco', sans-serif;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .button {
+            background: #444;
+            color: #fff;
+            border: none;
+            padding: 20px;
+            font-size: 1.5em;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button:hover {
+            background: #555;
+        }
+
+        .button.zero {
+            grid-column: span 2;
+            border-radius: 50% / 50%;
+        }
+
+        #clear {
+            background: #e74c3c;
+            border-radius: 50%;
+        }
+
+        #clear:hover {
+            background: #c0392b;
+        }
+
+        #equals {
+            background: #f39c12;
+            color: #fff;
+            border-radius: 50%;
+        }
+
+        #equals:hover {
+            background: #e67e22;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="button" id="clear">C</button>
+            <button class="button">/</button>
+            <button class="button">*</button>
+            <button class="button">-</button>
+            <button class="button">7</button>
+            <button class="button">8</button>
+            <button class="button">9</button>
+            <button class="button">+</button>
+            <button class="button">4</button>
+            <button class="button">5</button>
+            <button class="button">6</button>
+            <button class="button">.</button>
+            <button class="button">1</button>
+            <button class="button">2</button>
+            <button class="button">3</button>
+            <button class="button" id="equals">=</button>
+            <button class="button zero">0</button>
+            <button class="button">%</button>
+        </div>
+    </div>
+    <script>
+        const display = document.getElementById('display');
+        const buttons = Array.from(document.getElementsByClassName('button'));
+
+        buttons.map(button => {
+            button.addEventListener('click', (e) => {
+                if (e.target.id === 'clear') {
+                    display.innerText = '0';
+                } else if (e.target.id === 'equals') {
+                    try {
+                        display.innerText = eval(display.innerText);
+                    } catch {
+                        display.innerText = 'Error';
+                    }
+                } else if (e.target.innerText === '%') {
+                    try {
+                        display.innerText = eval(display.innerText) / 100;
+                    } catch {
+                        display.innerText = 'Error';
+                    }
+                } else {
+                    if (display.innerText === '0' || display.innerText === 'Error') {
+                        display.innerText = '';
+                    }
+                    display.innerText += e.target.innerText;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
